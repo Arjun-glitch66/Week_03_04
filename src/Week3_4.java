@@ -2,49 +2,46 @@ import java.util.*;
 
 public class Week3_4 {
 
-    static int linearSearch(String[] arr, String target) {
-        int comparisons = 0;
-
-        for (int i = 0; i < arr.length; i++) {
-            comparisons++;
-            if (arr[i].equals(target)) {
-                System.out.println("Found at index " + i);
-                System.out.println("Comparisons: " + comparisons);
-                return i;
-            }
-        }
-
-        System.out.println("Not found");
-        return -1;
-    }
-
-    static int binarySearch(String[] arr, String target) {
-        int low = 0, high = arr.length - 1, comparisons = 0;
+    static int floor(int[] arr, int target) {
+        int low = 0, high = arr.length - 1, ans = -1;
 
         while (low <= high) {
-            comparisons++;
             int mid = (low + high) / 2;
 
-            if (arr[mid].equals(target)) {
-                System.out.println("Found at index " + mid);
-                System.out.println("Comparisons: " + comparisons);
-                return mid;
-            }
-
-            if (arr[mid].compareTo(target) < 0)
+            if (arr[mid] <= target) {
+                ans = arr[mid];
                 low = mid + 1;
-            else
+            } else {
                 high = mid - 1;
+            }
         }
 
-        return -1;
+        return ans;
+    }
+
+    static int ceiling(int[] arr, int target) {
+        int low = 0, high = arr.length - 1, ans = -1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] >= target) {
+                ans = arr[mid];
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
     }
 
     public static void main(String[] args) {
 
-        String[] arr = {"accA", "accB", "accB", "accC"};
+        int[] arr = {10, 25, 50, 100};
+        int target = 30;
 
-        linearSearch(arr, "accB");
-        binarySearch(arr, "accB");
+        System.out.println("Floor: " + floor(arr, target));
+        System.out.println("Ceiling: " + ceiling(arr, target));
     }
 }
